@@ -1,13 +1,53 @@
 // beliefs and rules
 last_order_id(1).
+money(10).
+stock(0).
+default_price_beer(5).
+threshold(3).
 
 // initial goals
 
-!createStore.
+!makeMoney.
 
+!buyBeer.
+!sellBeer.
+!offerBeer.
+!manageOrders.
 !deliverBeer.
 
-// plans from file: mySupermarket.asl
+!makeMoney : stock(X) & money(Y) & Y>0 & X<10 <-
+		.println("No tengo stock pero tengo dinero, empiezo a comprar");
+		!buyBeer.
+		
+!buyBeer <-
+		.println("Supermarket 1 empieza a comprar");
+		+needBeer.
+
++auction(N)[source(S)] :  (threshold(T) & needBeer N < T) | (.my_name(I) & winner(I) & not alliance(I,A))
+   <- !bid_normally(S,N).
+
++auction(N)[source(S)] :  .my_name(I) & needBeer & not winner(I) & not alliance(I,A)
+   <- !alliance(A);
+      !bid_normally(S,N).
+
+@palliance
++auction(N)[source(S)]
+   :  alliance(_,A)
+   <- ?default_price_beer(B);
+      ?bid(A,C);
+      .send(S, tell, place_bid(N,B+C)).
+
++!bid_normally(S,N) : true
+   <- ?default_price_beer(B);
+      .send(S, tell, place_bid(N,B)).
+
+@prop_alliance[breakpoint]
++!alliance(A) : true
+   <- .send(A,tell,alliance).
+
+
+
+
 
 +!createStore <-
 	.create_agent(store, "store.asl");
