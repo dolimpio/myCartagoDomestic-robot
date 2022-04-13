@@ -1,5 +1,7 @@
 import jason.environment.grid.GridWorldModel;
 import jason.environment.grid.Location;
+import jason.environment.grid.Area;
+
 
 /** class that implements the Model of Domestic Robot application */
 public class MyHouseModel extends GridWorldModel {
@@ -16,10 +18,17 @@ public class MyHouseModel extends GridWorldModel {
     boolean carryingBeer = false; // whether the robot is carrying beer
     int sipCount        = 0; // how many sip the owner did
     int availableBeers  = 3; // how many beers are available
-
+    
+    
+    //Creamos areas. El robot debe posicionarse al lado de las casillas. (Menos area de entrega)
     Location lFridge = new Location(0,0);
-    Location lOwner  = new Location(GSize-1, GSize-1); 
+    Area aFridge = new Area(0,0,1,1); 
+
+    Location lOwner  = new Location(GSize-1, GSize-1);
+    Area aOwner = new Area(9,9,10,10); 
+
     Location lDelivery  = new Location(0, GSize-1); 
+
 	Location lRobot = new Location(GSize/2, GSize/2);
 	
     Location closeTolFridge = new Location(1,1);
@@ -79,8 +88,8 @@ public class MyHouseModel extends GridWorldModel {
 		
         setAgPos(0, r1); // move the robot in the grid
 
-		atOwner = r1.equals(closeTolOwner);
-		atFridge = r1.equals(closeTolFridge);
+		atOwner = r1.isInArea(aOwner);
+		atFridge = r1.isInArea(aFridge);
 		atDelivery = r1.equals(lDelivery);
 		atBase = r1.equals(lRobot);
 
