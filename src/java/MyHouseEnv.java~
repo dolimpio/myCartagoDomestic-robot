@@ -22,10 +22,6 @@ public class MyHouseEnv extends Environment {
     public static final Literal ao = Literal.parseLiteral("at(myRobot,myOwner)");
     public static final Literal ad = Literal.parseLiteral("at(myRobot,delivery)");
     public static final Literal ab = Literal.parseLiteral("at(myRobot,base)");
-	
-	//Owner literals
-	
-	public static final Literal owner_ThrowBeer = Literal.parseLiteral("throw(beer)");
 
     static Logger logger = Logger.getLogger(MyHouseEnv.class.getName());
 	
@@ -147,16 +143,9 @@ public class MyHouseEnv extends Environment {
                 logger.info("Failed to execute action deliver!"+e);
             }
 
-        } else if(action.equals(owner_ThrowBeer)){
-			result = model.throwBeer();
-		
-		}
-		
-		
-		else {
+        } else {
             logger.info("Failed to execute action "+action);
         }
-		
 
         if (result) {
             updatePercepts();
