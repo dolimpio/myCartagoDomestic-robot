@@ -23,6 +23,8 @@ public class MyHouseEnv extends Environment {
     public static final Literal ad = Literal.parseLiteral("at(myRobot,delivery)");
     public static final Literal ab = Literal.parseLiteral("at(myRobot,base)");
 
+    public static final Literal aw = Literal.parseLiteral("almost_without(beer)");
+
     static Logger logger = Logger.getLogger(MyHouseEnv.class.getName());
 	
 	private CartagoEnvironment cartagoEnv;
@@ -92,6 +94,9 @@ public class MyHouseEnv extends Environment {
         if (model.sipCount > 0) {
             addPercept("myRobot", hob);
             addPercept("myOwner", hob);
+        }
+        if (model.availableBeers < 2) {
+            addPercept("myRobot", aw);
         }
     }
 

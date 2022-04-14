@@ -5,6 +5,8 @@ available(beer,fridge).
 
 // my owner should not consume more than 10 beers a day :-)
 limit(beer,5).
+money(10).
+igual(X,X).
 
 too_much(B) :-
    .date(YY,MM,DD) &
@@ -55,6 +57,7 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 
 /* Initial goals */
 !initBot.
+!doHouseWork.
 
 !answerOwner.
 
@@ -120,7 +123,7 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 	.println("El robot coge una cerveza.");
 	close(fridge);
 	.println("El robot cierra la nevera.").
-+!check(fridge, beer) : not ordered(beer) & not available(beer,fridge) <-
++!check(fridge, beer) : not ordered(beer) & not available(beer,fridge) <- //Modificar para que pida cerveza antes de que se acabe
 	.println("El robot está en el frigorífico y hace un pedido de cerveza.");
 	!orderBeer(mySupermarket);
 	!check(fridge, beer).
@@ -133,7 +136,10 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 	.println("El robot ha realizado un pedido al supermercado.");
 	!go_at(myRobot,delivery);
 	.println("El robot va a la ZONA de ENTREGA.");
-	.send(Supermarket, achieve, order(beer,3)); // Modificar adecuadamente
+	!check_money;
+	!order_enough;
+	?buy(N, beer);
+	.send(Supermarket, achieve, order(beer,N)); // Modificar adecuadamentew
 	+ordered(beer).
 +!orderBeer(Supermarket).
 
@@ -163,11 +169,45 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 
 // when the fridge is opened, the beer stock is perceived
 // and thus the available belief is updated
-+stock(beer,0) :  available(beer,fridge) <-
+//Cuando quede una cerveza, el robot pedirá mas al supermercado.
++stock(beer,0) : available(beer,fridge) <-
 	-available(beer,fridge).
 +stock(beer,N) :  N > 0 & not available(beer,fridge) <-
 	-+available(beer,fridge).
 
++money(0) : available_money <-
+	-available_money.
+
+/*No puede ser negativo el dinero
++money(N) : N < 0 & available_money <-
+	-available_money.
+
++money(N) :  N > 0 & not available_money <-
+	-+available_money.*/
+
+//Segun el dinero que se tenga, se comprueba cuantas cervezas es posible comprar
++!check_money : money(N) & default_price_beer(Z) & N >= Z <- //mas tarde, comprobar que viene de algún supermercado
+	Number = 0;
+	while(N-Z > 0){
+		
+		Number++;
+		-+money(N-Z);
+		?money(N);
+	}
+	-+can_buy(Number, beer).
+
++!check_money : money(N) & default_price_beer(Z) & N < Z <- 
+	-available_money.
+
++!order_enough : available_money & can_buy(N, beer) & N > 2 <- //Si puede pedir mas de 2 cervezas, compra 3
+	-+buy(3, beer).
+
++!order_enough : available_money & can_buy(N, beer) & N < 3 <- //Si puede pedir menos de 3 cervezas, compra las que pueda
+	.print("Me quede sin dinero."); //Administrar que despues de esto consiga mas dinero
+	-+buy(N, beer).
+	
++!order_enough : available_money & can_buy(N, beer) & N == 0 <- // como conseguir mas dinero despues
+	.print("No se puede comprar mas cervezas.")
 +?time(T) : true
   <-  time.check(T).
 

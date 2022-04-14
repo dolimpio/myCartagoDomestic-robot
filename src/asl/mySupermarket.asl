@@ -8,6 +8,7 @@ threshold(3).
 // initial goals
 
 !makeMoney.
+!sendPrice. //Objetivo temporal para probar check_money en myRobot
 
 !buyBeer.
 !sellBeer.
@@ -15,11 +16,13 @@ threshold(3).
 !manageOrders.
 !deliverBeer.
 
-!makeMoney : stock(X) & money(Y) & Y>0 & X<10 <-
++!sendPrice <- .send(Supermarket, tell, default_price_beer(N)).
+
++!makeMoney : stock(X) & money(Y) & Y>0 & X<10 <-
 		.println("No tengo stock pero tengo dinero, empiezo a comprar");
 		!buyBeer.
 		
-!buyBeer <-
++!buyBeer <-
 		.println("Supermarket 1 empieza a comprar");
 		+needBeer.
 
@@ -44,9 +47,6 @@ threshold(3).
 @prop_alliance[breakpoint]
 +!alliance(A) : true
    <- .send(A,tell,alliance).
-
-
-
 
 
 +!createStore <-

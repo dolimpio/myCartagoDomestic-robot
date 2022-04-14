@@ -13,7 +13,6 @@ MAS domestic_robot {
 			myRobot
 				agentArchClass MixedAgentArch
 				agentArchClass jaca.CAgentArch;
-				//beliefBaseClass jason.bb.TextPersistentBB; //En principio anhade persistencia a la base de creeencias del robot, PARECE QUE FUNCIONA A MEDIAS
             mySupermarket;
 			
 	aslSourcePath: "src/asl";	
