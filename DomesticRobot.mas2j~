@@ -14,7 +14,6 @@ MAS domestic_robot {
 				agentArchClass MixedAgentArch
 				agentArchClass jaca.CAgentArch;
             mySupermarket;
-			generalMarket;
 			
 	aslSourcePath: "src/asl";	
 }                         

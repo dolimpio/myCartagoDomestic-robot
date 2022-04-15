@@ -140,11 +140,11 @@ public class MyHouseModel extends GridWorldModel {
 	
 	//Funciones owner
 	    boolean throwBeer() {
-			/*Random r1 = new Random(3);
+			Random r1 = new Random(3);
 			Random r2 = new Random(3);
 			
 			Location lCan  = new Location(GSize - r1.nextInt(3) , GSize - r2.nextInt(3));
-			add(CAN, lCan);*/
+			add(CAN, lCan);
 			return true;
     }
 	

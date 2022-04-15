@@ -1,5 +1,6 @@
 import jason.environment.grid.GridWorldModel;
 import jason.environment.grid.Location;
+import java.util.Random;
 
 /** class that implements the Model of Domestic Robot application */
 public class MyHouseModel extends GridWorldModel {
@@ -8,6 +9,7 @@ public class MyHouseModel extends GridWorldModel {
     public static final int FRIDGE 		= 16;
     public static final int OWNER  		= 32;
     public static final int DELIVERY  	= 64;
+	public static final int CAN  	= 128;
 
     // the grid size
     public static final int GSize = 11;
@@ -134,4 +136,16 @@ public class MyHouseModel extends GridWorldModel {
             return false;
         }
     }
+	
+	
+	//Funciones owner
+	    boolean throwBeer() {
+			/*Random r1 = new Random(3);
+			Random r2 = new Random(3);
+			
+			Location lCan  = new Location(GSize - r1.nextInt(3) , GSize - r2.nextInt(3));
+			add(CAN, lCan);*/
+			return true;
+    }
+	
 }
