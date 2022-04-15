@@ -15,15 +15,15 @@ threshold(3).
 !manageOrders.
 !deliverBeer.
 
-!makeMoney : stock(X) & money(Y) & Y>0 & X<10 <-
++!makeMoney : stock(X) & money(Y) & Y>0 & X<10 <-
 		.println("No tengo stock pero tengo dinero, empiezo a comprar");
 		!buyBeer.
-		
-!buyBeer <-
+
++!buyBeer <-
 		.println("Supermarket 1 empieza a comprar");
 		+needBeer.
 
-+auction(N)[source(S)] :  (threshold(T) & needBeer N < T) | (.my_name(I) & winner(I) & not alliance(I,A))
++auction(N)[source(S)] :  (threshold(T) & needBeer & N < T) | (.my_name(I) & winner(I) & not alliance(I,A))
    <- !bid_normally(S,N).
 
 +auction(N)[source(S)] :  .my_name(I) & needBeer & not winner(I) & not alliance(I,A)
