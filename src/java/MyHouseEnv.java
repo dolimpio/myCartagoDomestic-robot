@@ -25,6 +25,12 @@ public class MyHouseEnv extends Environment {
 
     public static final Literal aw = Literal.parseLiteral("almost_without(beer)");
 
+    public static final Literal tbf = Literal.parseLiteral("trash_bucket(full)");
+    public static final Literal ebt = Literal.parseLiteral("empty_bucket(trash)");
+
+    
+
+
     static Logger logger = Logger.getLogger(MyHouseEnv.class.getName());
 	
 	private CartagoEnvironment cartagoEnv;
@@ -98,6 +104,9 @@ public class MyHouseEnv extends Environment {
         if (model.availableBeers < 2) {
             addPercept("myRobot", aw);
         }
+        if(model.trashInBucket == 5){
+			addPercept("myRobot", tbf);      
+		}
     }
 
 
@@ -138,6 +147,8 @@ public class MyHouseEnv extends Environment {
 
         } else if (action.equals(sb) & ag.equals("myOwner")) {
             result = model.sipBeer();
+        }else if (action.equals(ebt)){
+                result = model.emptyTrash();
 
         } else if (action.getFunctor().equals("deliver") & ag.equals("mySupermarket")) {
             // wait 4 seconds to finish "deliver"

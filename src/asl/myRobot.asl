@@ -5,7 +5,7 @@ available(beer,fridge).
 
 // my owner should not consume more than 10 beers a day :-)
 limit(beer,5).
-money(10).
+money(15).
 igual(X,X).
 
 too_much(B) :-
@@ -175,26 +175,30 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 +stock(beer,N) :  N > 0 & not available(beer,fridge) <-
 	-+available(beer,fridge).
 
++!cleanHouse : trash_bucket(full) <- 
+	.send(garbageCollector, tell, trash_bucket(full));
+	.send(garbageCollector, achieve, emptyBucket);
+	-trash_bucket(full);
+	!cleanHouse.
+
++!cleanHouse <- +!cleanHouse.
+
+/*
 +money(0) : available_money <-
 	-available_money.
 
-/*No puede ser negativo el dinero
+No puede ser negativo el dinero
 +money(N) : N < 0 & available_money <-
 	-available_money.
 
 +money(N) :  N > 0 & not available_money <-
-	-+available_money.*/
+	-+available_money.
 
 //Segun el dinero que se tenga, se comprueba cuantas cervezas es posible comprar
+//Aun no funciona completamente
 +!check_money : money(N) & default_price_beer(Z) & N >= Z <- //mas tarde, comprobar que viene de algún supermercado
-	Number = 0;
-	while(N-Z > 0){
-		
-		Number++;
-		-+money(N-Z);
-		?money(N);
-	}
-	-+can_buy(Number, beer).
+	Number = N/Z;
+
 
 +!check_money : money(N) & default_price_beer(Z) & N < Z <- 
 	-available_money.
@@ -207,7 +211,7 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 	-+buy(N, beer).
 	
 +!order_enough : available_money & can_buy(N, beer) & N == 0 <- // como conseguir mas dinero despues
-	.print("No se puede comprar mas cervezas.")
+	.print("No se puede comprar mas cervezas.").*/
 +?time(T) : true
   <-  time.check(T).
 

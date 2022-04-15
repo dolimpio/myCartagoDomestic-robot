@@ -7,6 +7,7 @@ import jason.environment.grid.Area;
 public class MyHouseModel extends GridWorldModel {
 
     // constants for the grid objects
+    public static final int TRASH  = 8;
     public static final int FRIDGE 		= 16;
     public static final int OWNER  		= 32;
     public static final int DELIVERY  	= 64;
@@ -17,7 +18,9 @@ public class MyHouseModel extends GridWorldModel {
     boolean fridgeOpen   = false; // whether the fridge is open
     boolean carryingBeer = false; // whether the robot is carrying beer
     int sipCount        = 0; // how many sip the owner did
-    int availableBeers  = 3; // how many beers are available
+    int availableBeers  = 1; // how many beers are available
+    int trashInBucket = 0;
+
     
     
     //Creamos areas. El robot debe posicionarse al lado de las casillas. (Menos area de entrega)
@@ -30,6 +33,9 @@ public class MyHouseModel extends GridWorldModel {
     Location lDelivery  = new Location(0, GSize-1); 
 
 	Location lRobot = new Location(GSize/2, GSize/2);
+
+    Location lTrash  = new Location(10,0);
+
 	
     Location closeTolFridge = new Location(1,1);
     Location closeTolOwner  = new Location(GSize-2,GSize-2);
@@ -50,6 +56,8 @@ public class MyHouseModel extends GridWorldModel {
         add(FRIDGE, lFridge);
         add(OWNER, lOwner);
 		add(DELIVERY, lDelivery);
+        add(TRASH, lTrash);
+
     }
 	
     boolean openFridge() {
@@ -101,6 +109,14 @@ public class MyHouseModel extends GridWorldModel {
         }
         return true;
     }
+
+    boolean emptyTrash(){
+		if(trashInBucket == 5)
+			trashInBucket = 0;
+		 if (view != null)
+            view.update(lTrash.x,lTrash.y);
+		 return true;
+	}
 
     boolean getBeer() {
         if (fridgeOpen && availableBeers > 0 && !carryingBeer) {

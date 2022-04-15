@@ -41,6 +41,13 @@ public class MyHouseView extends GridWorldView {
             g.setColor(Color.black);
             drawString(g, x, y, defaultFont, "Del");
             break;
+		case MyHouseModel.TRASH:
+            if (lRobot.equals(hmodel.lTrash)) { 
+                super.drawAgent(g, x, y, Color.green, -1);
+            }
+            g.setColor(Color.black);
+            drawString(g, x, y, defaultFont, "Trash ("+hmodel.trashInBucket+")");
+            break;                                                                         
         case MyHouseModel.OWNER:
 			super.drawAgent(g, x, y, Color.red, -1);
             if (lRobot.equals(hmodel.lOwner)) {
