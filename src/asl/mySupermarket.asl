@@ -24,6 +24,7 @@ threshold(3).
 		+needBeer.
 
 +auction(N)[source(S)] :  (threshold(T) & needBeer & N < T) | (.my_name(I) & winner(I) & not alliance(I,A))
+
    <- !bid_normally(S,N).
 
 +auction(N)[source(S)] :  .my_name(I) & needBeer & not winner(I) & not alliance(I,A)
