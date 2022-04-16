@@ -14,6 +14,9 @@ MAS domestic_robot {
 				agentArchClass MixedAgentArch
 				agentArchClass jaca.CAgentArch;
             mySupermarket;
-			
+			generalMarket
+			    agentArchClass AuctioneerGUI
+				beliefBaseClass jason.bb.TextPersistentBB;
+
 	aslSourcePath: "src/asl";	
 }                         

@@ -1,6 +1,5 @@
 // beliefs and rules
-beer(10).
-
+beer(0).
 
 // initial goals
 
