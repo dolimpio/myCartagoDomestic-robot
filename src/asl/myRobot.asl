@@ -67,14 +67,16 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 	focus(BOT);
 	+bot("bot").
 
+
+
 +!answerOwner : msg(Msg)[source(Ag)] & bot(Bot) <-
-	chatSincrono(Msg,Answer);
-	//chat(Msg) // De manera asíncrona devuelve una signal => answer(Answer)
+	bot.ownerResponses(Msg,Answer);
 	-msg(Msg)[source(Ag)];   
 	.println("El agente ",Ag," ha dicho ",Msg);
-	!doSomething(Answer,Ag);
-	//.send(Ag,tell,answer(Answer)); //modificar adecuadamente
+	.send(Ag,tell,answer(Answer));
 	!answerOwner.
+
+
 +!answerOwner <- !answerOwner.
 
 +!doSomething(Answer,Ag) : service(Answer, Service) <-

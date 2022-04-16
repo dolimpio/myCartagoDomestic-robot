@@ -1,10 +1,14 @@
 /* Initial beliefs and rules */
 
+estate(4).
+
 /* Initial goals */
 
 !drink(beer). 
 
 !bored.
+
+!decay.
 
 !setupTool("Owner", "Robot").
 
@@ -17,15 +21,42 @@
 		setBotMasterName(Name);
 		setBotName(Id);
 		focus(GUI). 
-		
-+say(Msg) <-
-	.println("Owner esta aburrido y desde la consola le dice ", Msg, " al Robot");
-	.send(myRobot,tell,msg(Msg)).
 
 //Si el owner esta aburrido le habla al robot	
-+!bored <-
-	.println("Owner esta aburrido y le dice Hola al Robot");
-	.send(myRobot,tell,msg("Hola")).
++!bored : estate(4) <-
+	.random(R);
+	.wait(R*1000+5000);
+	.println("Owner esta aburrido y animado y le dice: Hola que haces robot?!");
+	.send(myRobot,tell,msg("Hola que haces robot?!"));
+	!bored.
+	
++!bored : estate(3) <-
+	.random(R);
+	.wait(R*1000+5000);
+	.println("Owner esta aburrido y euforico y le dice: Hola robotito, como estas");
+	.send(myRobot,tell,msg("Hola robotito, como estas"));
+	!bored.
+	
++!bored : estate(2) <-
+	.random(R);
+	.wait(R*1000+5000);
+	.println("Owner esta aburrido y crispado y le dice: Maldito cacharro di algo");
+	.send(myRobot,tell,msg("Maldito cacharro di algo"));
+	!bored.
+	
++!bored : estate(1) <-
+	.random(R);
+	.wait(R*1000+5000);
+	.println("Owner esta aburrido y amodorrado y le dice: Hola zz que suenho zz");
+	.send(myRobot,tell,msg("Hola zz que suenho zz"));
+	!bored.
+	
++!bored : estate(0) <-
+	.random(R);
+	.wait(R*1000+5000);
+	.println("Owner esta aburrido y dormido y le dice: Hola zzzz zzzz zzzz");
+	.send(myRobot,tell,msg("Hola zzzz zzzz zzzz"));
+	!bored.
 	
 //Si el owner no puede beber, no bebe
 +!drink(beer) : ~couldDrink(beer) <-
@@ -36,6 +67,8 @@
 	.println("Owner va a empezar a beber cerveza.");
 	-asked(beer);
 	sip(beer);
+	-+estate(4);
+	.println("Eh bebido cerveza y estoy en estado 5: Animado");
 	!drink(beer).
 	
 //Si el owner tiene cerveza y no pidio cerveza bebe
@@ -76,3 +109,13 @@
 	show(Request).
 	
 -answer(What) <- .println("He recibido desde el robot: ", What).
+
++!decay: true <-
+	.random(R);
+	.wait(R*1000+5000);
+	?estate(X);
+	if(X \== 0){
+		-+estate(X-1);
+	}
+
+	!decay.
