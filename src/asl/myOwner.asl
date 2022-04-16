@@ -21,40 +21,41 @@ estate(4).
 		setBotMasterName(Name);
 		setBotName(Id);
 		focus(GUI). 
-		
-+say(Msg) <-
-	.println("Owner esta aburrido y desde la consola le dice ", Msg, " al Robot");
-	.send(myRobot,tell,msg(Msg)).
 
 //Si el owner esta aburrido le habla al robot	
 +!bored : estate(4) <-
-	.wait(5000);
+	.random(R);
+	.wait(R*1000+5000);
 	.println("Owner esta aburrido y animado y le dice: Hola que haces robot?!");
-	//.send(myRobot,tell,msg("Hola que haces robot?!"));
+	.send(myRobot,tell,msg("Hola que haces robot?!"));
 	!bored.
 	
 +!bored : estate(3) <-
-	.wait(5000);
+	.random(R);
+	.wait(R*1000+5000);
 	.println("Owner esta aburrido y euforico y le dice: Hola robotito, como estas");
-	//.send(myRobot,tell,msg("Hola robotito, como estas"));
+	.send(myRobot,tell,msg("Hola robotito, como estas"));
 	!bored.
 	
 +!bored : estate(2) <-
-	.wait(5000);
+	.random(R);
+	.wait(R*1000+5000);
 	.println("Owner esta aburrido y crispado y le dice: Maldito cacharro di algo");
-	//.send(myRobot,tell,msg("Maldito cacharro di algo"));
+	.send(myRobot,tell,msg("Maldito cacharro di algo"));
 	!bored.
 	
 +!bored : estate(1) <-
-	.wait(5000);
-	.println("Owner esta aburrido y amodorrado y le dice: Hola zz que sueño zz");
-	//.send(myRobot,tell,msg("Hola zz"));
+	.random(R);
+	.wait(R*1000+5000);
+	.println("Owner esta aburrido y amodorrado y le dice: Hola zz que suenho zz");
+	.send(myRobot,tell,msg("Hola zz que suenho zz"));
 	!bored.
 	
 +!bored : estate(0) <-
-	.wait(5000);
+	.random(R);
+	.wait(R*1000+5000);
 	.println("Owner esta aburrido y dormido y le dice: Hola zzzz zzzz zzzz");
-	//.send(myRobot,tell,msg("Hola zzzz"));
+	.send(myRobot,tell,msg("Hola zzzz zzzz zzzz"));
 	!bored.
 	
 //Si el owner no puede beber, no bebe
@@ -114,6 +115,7 @@ estate(4).
 	.wait(R*1000+5000);
 	?estate(X);
 	if(X \== 0){
-	-+estate(X-1);
+		-+estate(X-1);
 	}
+
 	!decay.

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+
+<category>
+<pattern>Hola que haces robot?!</pattern>
+<template>Aqui limpiando, como andamos?</template>
+</category>
+
+
+<category>
+<pattern>Hola robotito, como estas</pattern>
+<template>Bien uwu como estas tu</template>
+</category>
+
+<category>
+<pattern>Maldito cacharro di algo</pattern>
+<template>Descargando chiste...</template>
+</category>
+
+<category>
+<pattern>Hola zz que suenho zz</pattern>
+<template>A ver si se duerme...</template>
+</category>
+
+<category>
+<pattern>Hola zzzz zzzz zzzz</pattern>
+<template>Al fin se duerme</template>
+</category>
+
+
+
+</aiml>
