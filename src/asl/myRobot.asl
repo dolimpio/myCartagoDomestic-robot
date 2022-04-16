@@ -181,7 +181,7 @@ filter(Answer, addingBot, [ToWrite,Route]):-
 	-trash_bucket(full);
 	!cleanHouse.
 
-+!cleanHouse <- +!cleanHouse.
++!cleanHouse <- !cleanHouse.
 
 /*
 +money(0) : available_money <-

@@ -1,13 +1,18 @@
 /* Initial beliefs and rules */
 
 /* Initial goals */
-
+!initBot.
 !drink(beer). 
 
 !bored.
 
 !setupTool("Owner", "Robot").
 
++!initBot <-
+	makeArtifact("BOT","bot.ChatBOT",["bot"],BOT);
+	focus(BOT);
+	+bot("bot").
+	
 /* Plans */
 
 // if I have not beer finish, in other case while I have beer, sip
